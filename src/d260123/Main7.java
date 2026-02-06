@@ -1,0 +1,29 @@
+package d260123;
+
+import java.io.*;
+
+public class Main7 {
+	
+	public static void main(String[] args) throws IOException {
+		//메모리에 한글 문자열을 입력하고 
+		//메모리에 있는 문자열을 파일에 기록하시오.
+		
+		String s="자바프로그래밍!!";
+		FileOutputStream fout=new FileOutputStream("c.txt");
+		fout.write(s.getBytes());
+		
+		//c.txt파일의 내용을 한바이트씩 출력하시오
+		FileInputStream fin=new FileInputStream("c.txt");
+		/*
+		while(fin.available()>0) {
+			System.out.print((char)fin.read());
+		}
+		*/
+		
+		//한번에 데이터 가져오기(byte데이터 -> String 데이터 변환)
+		byte[] bytes=new byte[256];
+		fin.read(bytes);
+		System.out.println(new String(bytes));
+		
+	}
+}
