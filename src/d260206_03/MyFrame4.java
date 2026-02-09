@@ -68,7 +68,7 @@ public class MyFrame4 {
 					//메시지를 보내기 위해서는 tmsg의 값을 가지고 와서
 					String sendmsg=tmsg.getText();
 					//메시지값을 소켓으로 send시키고
-					new Thread(new Send(sendmsg));
+					new Thread();
 					//
 					//수신된 값을 textArea 텍스트 상자에 입력
 					ta.setText(ta.getText()+sendmsg+"\r\n");

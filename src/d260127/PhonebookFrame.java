@@ -44,6 +44,14 @@ public class PhonebookFrame extends Frame{
 	TextField updateSearchNametf;
 	Button updateSearchbtn;
 	java.awt.List updateSearchListBox;
+	
+	//수정(眞)
+	Label editIdlb, editNamelb, editHplb, editEmaillb;
+	TextField editNametf, editHptf, editEmailtf;
+	Button editSavebtn;
+	int targetId;
+	
+	
 	//삭제 부품
 	Button deleteActionBtn;
 	boolean isDeleteMode = false;
@@ -315,8 +323,93 @@ public class PhonebookFrame extends Frame{
 		});
 		
 		//수정(眞)
+		editIdlb = new Label("ID:");
+		editNamelb = new Label("이름:");
+		editHplb = new Label("전화번호:");
+		editEmaillb = new Label("이메일:");
+
+		editNametf = new TextField(20);
+		editHptf = new TextField(20);
+		editEmailtf = new TextField(20);
+		editSavebtn = new Button("수정내용 저장하기");
+
+		editIdlb.setVisible(false);
+		editNamelb.setVisible(false);
+		editHplb.setVisible(false);
+		editEmaillb.setVisible(false);
+		editNametf.setVisible(false);
+		editHptf.setVisible(false);
+		editEmailtf.setVisible(false);
+		editSavebtn.setVisible(false);
+
+		add(editIdlb); 
+		add(editNamelb); 
+		add(editNametf);
+		add(editHplb); 
+		add(editHptf);
+		add(editEmaillb); 
+		add(editEmailtf);
+		add(editSavebtn);
 		
+		menuUpdatebtn.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        setVisible();
+		        isDeleteMode = false;
+		        
+		        updateNamelb.setVisible(true);
+		        updateSearchNametf.setVisible(true);
+		        updateSearchbtn.setVisible(true);
+		        
+		        revalidate(); repaint();
+		    }
+		});
 		
+		updateSearchListBox.addItemListener(new ItemListener() {
+		    @Override
+		    public void itemStateChanged(ItemEvent e) {
+		        int id = Integer.parseInt(updateSearchListBox.getSelectedItem().split(" ")[0]);
+		        targetId = id;
+
+		        for(Phonebook p : pm.getList()) {
+		            if(p.getId() == id) {
+		                editIdlb.setText("ID: " + p.getId());
+		                editNametf.setText(p.getName());
+		                editHptf.setText(p.getHp());
+		                editEmailtf.setText(p.getEmail());
+		                break;
+		            }
+		        }
+		        
+		        editIdlb.setVisible(true);
+		        editNamelb.setVisible(true); editNametf.setVisible(true);
+		        editHplb.setVisible(true); editHptf.setVisible(true);
+		        editEmaillb.setVisible(true); editEmailtf.setVisible(true);
+		        editSavebtn.setVisible(true);
+		        
+		        revalidate(); repaint();
+		    }
+		});
+		
+		editSavebtn.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        for(Phonebook p : pm.getList()) {
+		            if(p.getId() == targetId) {
+		                p.setName(editNametf.getText());
+		                p.setHp(editHptf.getText());
+		                p.setEmail(editEmailtf.getText());
+		                break;
+		            }
+		        }
+		        
+		        System.out.println("수정 완료!");
+		        setVisible(); 
+		        revalidate(); repaint();
+		    }
+		});
+		
+	
 		//삭제
 		deleteActionBtn = new Button("삭제하기");
 		deleteActionBtn.setPreferredSize(new Dimension(200, 40));
@@ -408,7 +501,16 @@ public class PhonebookFrame extends Frame{
 		
 		updateSearchListBox.setVisible(false);
 		
+		editIdlb.setVisible(false);
+	    editNamelb.setVisible(false);
+	    editHplb.setVisible(false);
+	    editEmaillb.setVisible(false);
+	    editNametf.setVisible(false);
+	    editHptf.setVisible(false);
+	    editEmailtf.setVisible(false);
+	    editSavebtn.setVisible(false);
 		
+				
 		deleteActionBtn.setVisible(false);
 	}
 }
